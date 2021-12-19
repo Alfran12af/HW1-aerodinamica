@@ -22,15 +22,15 @@ alfa_l0 = zeros(length(f), length(p));
 
 %% C_M0 Y ALFA_L0
 
-for i = 1:length(f)
-    for j = 1:length(p)
+for i = 1:length(f) % análisis para cada curvatura máxima
+    for j = 1:length(p) % análisis de la posición de cada curvatura máxima
         [coord, pnorm, ptang, xvort, xcont, pchord] = Geometria(M, f(i), p(j), c, xh, eta); 
         [G] = Circulacion(M, xcont, xvort, pnorm, alfa, U_inf);
         [CLDVM, CMLEDVM] = CoeficientesDVM(M, U_inf, G, xvort, x_ref, alfa, pchord, c, coord);
         [Tabla, CL_alfa_grados, alfa_l0_asd] = Validacion_sin_flap(M, f(i), p(j), c, xh, eta, U_inf, x_ref);
         
-        CM0(i,j) = CMLEDVM;
-        alfa_l0(i,j) = alfa_l0_asd;
+        CM0(i,j) = CMLEDVM; % coeficiente de momento libre calculado por DVM
+        alfa_l0(i,j) = alfa_l0_asd; % ángulo de sustentación nula por DVM
     end
 end
 

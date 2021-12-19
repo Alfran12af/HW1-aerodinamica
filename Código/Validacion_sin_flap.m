@@ -32,8 +32,6 @@ CL_alfa_grados = CL_alfa_rad/180*pi; % conversión de 1/rad a 1/grados
 alfa_l0 = alfa_vector(j)-CLDVM(j)/CL_alfa_rad; % interpolación
 alfa_l0 = alfa_l0*180/pi; % conversión de rad a grados
 
-% plot(alfa_vector(1,:),CLDVM(1,:)); %plot de CL vs alfa
-
 % Cálculo del coeficiente de momento en el ca
 CM0 = CM0DVM(j)-CLDVM(j)*(CM0DVM(j-1)-CM0DVM(j))/(CLDVM(j-1)-CLDVM(j));
 
@@ -64,7 +62,7 @@ alfa_l0_error = abs(alfa_l0_exp-alfa_l0)/alfa_l0_exp*100;
 CM0_exp = CM0_1-(CM0_2-CM0_1)/(CL_2-CL_1)*CL_1;
 CM0_error = abs(CM0_exp-CM0)/CM0_exp*100;
 
-%TABLA RESULTADOS:
+%TABLA DE RESULTADOS:
 Tabla = table({'CL_alfa', 'alfa_l0', 'CM0'}, [CL_alfa_grados alfa_l0 CM0], [CL_alfa_exp_grados alfa_l0_exp CM0_exp], [CL_alfa_error_grados alfa_l0_error CM0_error]);
 Tabla.Properties.VariableNames = {'Variable' 'DVM' 'Experimental' 'Error relativo (%)'};
 

@@ -21,21 +21,24 @@ for i=1:M
     Matriu_CL(1, i) = i;
     Matriu_CMLE(1, i) = i;
     
+    % Cálculo de los coeficientes según el método TAT
     [CLTAT, CMLETAT] = CoeficientesTAT(p, f, c, alfa); %CL y CMLE según TAT
     Matriu_CL(2, i) = CLTAT;
     Matriu_CMLE(2, i) = CMLETAT;
     
-    
-    [coord, pnorm, ptang, xvort, xcont, pchord] = Geometria(i, f, p, c, xh, eta); %CL y CMLE según DVM
+    % Cálculo de los coeficientes según el método DVM
+    [coord, pnorm, ptang, xvort, xcont, pchord] = Geometria(i, f, p, c, xh, eta);
     [G] = Circulacion(i, xcont, xvort, pnorm, alfa, U_inf);
     [CLDVM, CMLEDVM] = CoeficientesDVM(i, U_inf, G, xvort, x_ref, alfa, pchord, c, coord);
     Matriu_CL(3, i) = CLDVM;
     Matriu_CMLE(3, i) = CMLEDVM;
     
+    % Cálculo del error relativo
     Matriu_CL(4,i) = abs(abs(Matriu_CL(3, i)-Matriu_CL(2, i))/Matriu_CL(2, i))*100;
     Matriu_CMLE(4,i) = -abs(abs(Matriu_CMLE(3, i)-Matriu_CMLE(2, i))/Matriu_CMLE(2, i))*100;
 end
 
+%% FIGURAS
 
 figure
 yyaxis left
@@ -70,10 +73,6 @@ ylim([-55 3])
 grid on
 legend('C_{MLE} según TAT', 'C_{MLE} según DMV', 'Error relativo C_{MLE} (%)', 'Location', 'East');
 hold off
-
-%IMPORTANT: aquesta gràfica a vegades funciona, a vegades no, fa una mica
-%el que vol tbh així que si algú s'ho pot mirar estaria bé
-
 
 figure
 plot(coord(1,:),coord(2,:), '-o');
